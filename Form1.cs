@@ -6,7 +6,7 @@ namespace ThreadsTest4
 {
     public partial class Form1 : Form
     {
-        Thread[] thread = new Thread[2];
+        Thread[] thread = new Thread[3];
         public void addCount()
         {
             for (int i = 0; i < 100; i++)
@@ -14,6 +14,15 @@ namespace ThreadsTest4
                 Invoke((MethodInvoker)delegate () { textBox1.Text += "1"; });
 
                 Thread.Sleep(500);
+            }
+        }
+
+        public void progress()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                Invoke((MethodInvoker)delegate () { progressBar1.Value = i; });
+                Thread.Sleep(100);
             }
         }
         public void addCount2()
@@ -49,5 +58,19 @@ namespace ThreadsTest4
             thread[1].Start();
         }
 
-      }  
+        private void button3_Click(object sender, EventArgs e)
+        {
+            thread[2] = new Thread(progress);
+            thread[2].Start();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach (Thread item in thread)
+            {
+                item.Abort();
+            }
+            
+        }
+    }  
 }
