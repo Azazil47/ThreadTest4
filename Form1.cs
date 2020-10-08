@@ -20,7 +20,10 @@ namespace ThreadsTest4
         {
             for (int i = 0; i < 100; i++)
             {
-                Invoke((MethodInvoker)delegate () { textBox2.Text += "2"; });
+                Invoke((MethodInvoker)delegate () 
+                { 
+                    textBox2.Text += "2"; 
+                });
 
                 Thread.Sleep(500);
             }
